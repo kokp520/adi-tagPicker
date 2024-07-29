@@ -38,18 +38,16 @@ source ~/.zshrc
 
 install fzf-tab:
 
-```
-
 
 # Usage
 
 you can use my aother repo name adi-dosh for alias sheel script.
 
 alias.sh >>>
-![alt text](image.png)
+![alt text](images/image.png)
 
 choose adi-tagPicker.sh >>>
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 choose tag
 
@@ -64,4 +62,4 @@ main => 1.3.0
 if you choose fix...
 main => 1.2.4 
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
