@@ -1,42 +1,20 @@
+# Simple Tag picker 
+
+This is a simple tag picker for using with git tags.
+Cause Doing the project development always tag a new version with develop feature.
+You can use this script to choose the tag version u want to use.
+
+Maybe your app with the complex tag like `kernelService-mircoService-v1.2.3` ...
+imagine the product have 10 services.
+
+Hope can save your time.
+
 # Install 
 
 install fzf using brew:
 ```
 brew install fzf
 ```
-
-install zsh sheel:
-
-```
-brew install zsh
-```
-
-install oh-my-zsh:
-
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-```
-
-install powerlevel10k:
-
-```
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-```
-
-add the following to your ~/.zshrc file:
-
-```
-ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git fzf)
-```
-
-source the file:
-
-```
-source ~/.zshrc
-```
-
-install fzf-tab:
 
 
 # Usage
@@ -49,17 +27,12 @@ alias.sh >>>
 choose adi-tagPicker.sh >>>
 ![alt text](images/image-1.png)
 
-choose tag
+版本的選擇規則為:
+opt=("main", "mid", "fix")
 
-e.g. `1.2.3`
-
-if you choose main...
+選擇main調整大版本號, mid為新服務更新, fix為bug修復版本號
 main => 2.0.0 
-
-if you choose mid...
-main => 1.3.0
-
-if you choose fix...
-main => 1.2.4 
+mid => 1.3.0
+fix => 1.2.4 
 
 ![alt text](images/image-2.png)
