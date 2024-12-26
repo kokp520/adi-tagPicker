@@ -1,40 +1,79 @@
 const inquirer = require('inquirer');
 const simpleGit = require('simple-git');
 const chalk = require('chalk');
+const boxen = require('boxen');
+const ora = require('ora');
+const figlet = require('figlet');
+const gradient = require('gradient-string');
+
+// figet title
+function showTitle() {
+    return new Promise((resolve) => {
+        figlet('Auto Tagger', {
+            font: 'Standard',
+            horizontalLayout: 'default',
+            verticalLayout: 'default',
+        }, function(err, data) {
+            if (err) {
+                console.log('Something went wrong...');
+                resolve();
+                return;
+            }
+            console.log(gradient.pastel.multiline(data));
+            console.log(boxen(chalk.blue('Git Tag 版本管理工具 by adi'), {
+                padding: 1,
+                margin: 1,
+                borderStyle: 'round',
+                borderColor: 'blue'
+            }));
+            resolve();
+        });
+    });
+}
 
 async function isGitRepo() {
+    const spinner = ora('檢查 Git 倉庫...').start();
     const git = simpleGit();
     try {
         await git.revparse(['--git-dir']);
+        spinner.succeed('Git 倉庫檢查通過');
         return true;
     } catch (error) {
+        spinner.fail('不是有效的 Git 倉庫');
         return false;
     }
 }
 
 async function getAllTags() {
     const git = simpleGit();
+    const spinner = ora('正在獲取 Git tags...').start();
     try {
-        console.log(chalk.blue('正在獲取 Git tags...'));
         const { all: tags } = await git.tags();
+        if (tags.length > 0) {
+            spinner.succeed(`成功獲取 ${tags.length} 個 tags`);
+        } else {
+            spinner.info('倉庫中沒有任何 tags');
+        }
         return tags.sort((a, b) => {
             return b.localeCompare(a, undefined, { numeric: true, sensitivity: 'base' });
         });
     } catch (error) {
+        spinner.fail('獲取 tags 失敗');
         throw new Error('獲取 tags 失敗');
     }
 }
 
 function parseVersion(tag) {
-    console.log(chalk.blue(`正在解析 tag: ${tag}`));
+    const spinner = ora(`正在解析 tag: ${tag}`).start();
     const versionMatch = tag.match(/[0-9]+\.[0-9]+\.[0-9]+/);
     if (!versionMatch) {
-        console.log(chalk.yellow(`警告: tag "${tag}" 不符合版本號格式 (x.y.z)`));
+        spinner.warn(`Tag "${tag}" 不符合版本號格式 (x.y.z)`);
         return null;
     }
     
     const version = versionMatch[0];
     const parts = version.split('.').map(Number);
+    spinner.succeed(`成功解析版本號: ${version}`);
     return parts;
 }
 
@@ -54,40 +93,39 @@ function incrementVersion(version, type) {
 
 async function run() {
     try {
-        console.log(chalk.green('=== Git Tag 管理工具 ==='));
+        await showTitle();
         
-        // 檢查是否在 Git 倉庫中
         if (!await isGitRepo()) {
-            console.log(chalk.red('錯誤: 當前目錄不是 Git 倉庫'));
-            console.log(chalk.yellow('請在 Git 倉庫目錄下執行此命令'));
+            console.log(boxen(chalk.red('請在 Git 倉庫目錄下執行此命令'), {
+                padding: 1,
+                margin: 1,
+                borderStyle: 'double',
+                borderColor: 'red'
+            }));
             return;
         }
 
-        // 獲取所有 tags
         const tags = await getAllTags();
 
         if (tags.length === 0) {
-            console.log(chalk.yellow('提示: 目前倉庫中沒有任何 tag'));
             const { createFirst } = await inquirer.prompt([
                 {
                     type: 'confirm',
                     name: 'createFirst',
-                    message: '是否要創建第一個 tag (1.0.0)?',
+                    message: '是否要創建第一個 tag (v1.0.0)?',
                     default: true
                 }
             ]);
 
             if (createFirst) {
+                const spinner = ora('正在創建首個 tag...').start();
                 const git = simpleGit();
-                await git.addTag('1.0.0');
-                console.log(chalk.green('✓ 成功創建首個 tag: 1.0.0'));
+                await git.addTag('v1.0.0');
+                spinner.succeed('成功創建首個 tag: v1.0.0');
             }
             return;
         }
 
-        console.log(chalk.blue(`找到 ${tags.length} 個 tags`));
-
-        // 選擇 tag
         const { selectedTag } = await inquirer.prompt([
             {
                 type: 'list',
@@ -97,53 +135,68 @@ async function run() {
             }
         ]);
 
-        // 解析版本號
         const version = parseVersion(selectedTag);
         if (!version) {
-            console.log(chalk.red('錯誤: 無法解析版本號'));
             return;
         }
 
-        // 選擇更新類型
         const { updateType } = await inquirer.prompt([
             {
                 type: 'list',
                 name: 'updateType',
                 message: '請選擇要更新的版本級別：',
                 choices: [
-                    { name: '修復 (patch)', value: 'fix' },
-                    { name: '功能 (minor)', value: 'mid' },
-                    { name: '主要 (major)', value: 'main' }
+                    { name: '🐛 修復 (patch)', value: 'fix' },
+                    { name: '✨ 功能 (minor)', value: 'mid' },
+                    { name: '🚀 主要 (major)', value: 'main' }
                 ]
             }
         ]);
 
-        // 計算新版本號
         const newVersion = incrementVersion(version, updateType);
         const newVersionStr = newVersion.join('.');
         const newTag = selectedTag.replace(/[0-9]+\.[0-9]+\.[0-9]+/, newVersionStr);
 
-        // 確認創建
+        console.log(boxen(
+            `${chalk.blue('當前版本:')} ${chalk.yellow(selectedTag)}\n` +
+            `${chalk.blue('新版本:')} ${chalk.green(newTag)}`,
+            {
+                padding: 1,
+                margin: 1,
+                borderStyle: 'round',
+                borderColor: 'cyan'
+            }
+        ));
+
         const { confirm } = await inquirer.prompt([
             {
                 type: 'confirm',
                 name: 'confirm',
-                message: `確定要創建新的 tag ${chalk.green(newTag)} 嗎？`,
+                message: `確定要創建新的 tag 嗎？`,
                 default: true
             }
         ]);
 
         if (confirm) {
+            const spinner = ora('正在創建新的 tag...').start();
             const git = simpleGit();
             await git.addTag(newTag);
-            console.log(chalk.green(`✓ 成功創建新的 tag: ${newTag}`));
+            spinner.succeed(`成功創建新的 tag: ${chalk.green(newTag)}`);
         } else {
             console.log(chalk.yellow('已取消創建'));
         }
 
     } catch (error) {
-        console.error(chalk.red('發生錯誤：'), error.message);
-        console.error(chalk.gray('詳細錯誤：'), error);
+        console.log(boxen(
+            `${chalk.red('錯誤:')} ${error.message}\n\n` +
+            `${chalk.gray('詳細錯誤:')}\n${error.stack}`,
+            {
+                padding: 1,
+                margin: 1,
+                borderStyle: 'double',
+                borderColor: 'red'
+            }
+        ));
     }
 }
 
