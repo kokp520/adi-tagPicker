@@ -1,23 +1,36 @@
-# Simple Tag picker 
+# auto-tagger
 
 This is a simple tag picker for using with git tags.
 Cause Doing the project development always tag a new version with develop feature.
 You can use this script to choose the tag version u want to use.
 
-Maybe your app with the complex tag like `kernelService-mircoService-v1.2.3` ...
+Maybe your app with the complex tag like `kernel-mircoservice-v1.2.3` ...
 imagine the product have 10 services.
 
 Hope can save your time.
 
-# Install 
+# Support
 
+- shell script
+- npm 
+
+## Npm
+
+### Install
+
+```
+npm install -g auto-tagger
+```
+
+## Shell
+
+### Install 
 install fzf using brew:
 ```
 brew install fzf
 ```
 
-
-# Usage
+### Usage
 
 you can use my aother repo name adi-dosh for alias sheel script.
 
@@ -36,3 +49,7 @@ mid => 1.3.0
 fix => 1.2.4 
 
 ![alt text](images/image-2.png)
+
+# author
+
+adi
