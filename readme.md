@@ -44,6 +44,7 @@ And you will see the tag list.
 ![alt text](images/auto-tagger-1.png)
 
 Choose the tag for the last commit.
+
 ![alt text](images/auto-tagger-2.png)
 
 AND DON'T FORGET TO PUSH THE TAG TO THE REMOTE REPO.
