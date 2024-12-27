@@ -1,6 +1,6 @@
 {
   "name": "@kokp520/auto-tagger",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "This is a simple tag picker for using with git tags. Cause Doing the project development always tag a new version with develop feature. You can use this script to choose the tag version u want to use.",
   "main": "src/index.js",
   "bin": {
