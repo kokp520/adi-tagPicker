@@ -30,25 +30,25 @@
 
 ### Install
 
+run this command to install the package.
 ```
 npm install -g auto-tagger
 ```
 
-in your project dir
+Go to your project directory with .git and run this command.
 ```
 cd /file/to/your/project/; auto-tagger
 ```
 
-and you will see the tag list.
+And you will see the tag list.
 ![alt text](images/auto-tagger-1.png)
 
 Choose the tag for the last commit.
-
 ![alt text](images/auto-tagger-2.png)
 
 AND DON'T FORGET TO PUSH THE TAG TO THE REMOTE REPO.
 
-之後優化自動push：
+After that, I will optimize the auto push feature to the remote repo.
 ```
 git push --tags
 ```
