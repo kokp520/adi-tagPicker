@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kokp520/adi-tagPicker.git"
+    "url": "git+https://github.com/kokp520/autoTagger.git"
   },
   "author": "adi",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kokp520/adi-tagPicker/issues"
   },
-  "homepage": "https://github.com/kokp520/adi-tagPicker#readme",
+  "homepage": "https://github.com/kokp520/autoTagger#readme",
   "keywords": [
     "git",
     "tag",
@@ -44,5 +44,6 @@
     "LICENSE",
     "package.json",
     "package-lock.json"
-  ]
+  ],
+  "private": false
 }
