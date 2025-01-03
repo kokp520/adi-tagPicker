@@ -1,6 +1,6 @@
 {
   "name": "@kokp520/auto-tagger",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "This is a simple tag picker for using with git tags. Cause Doing the project development always tag a new version with develop feature. You can use this script to choose the tag version u want to use.",
   "main": "src/index.js",
   "bin": {
@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/kokp520/autoTagger.git"
   },
+  "type": "module",
   "author": "adi",
   "license": "MIT",
   "bugs": {
@@ -29,13 +30,14 @@
     "adi"
   ],
   "dependencies": {
-    "chalk": "^4.1.2",
-    "inquirer": "^8.2.4",
-    "simple-git": "^3.22.0",
     "boxen": "^5.1.2",
-    "ora": "^5.4.1",
+    "chalk": "^4.1.2",
     "figlet": "^1.5.2",
-    "gradient-string": "^2.0.2"
+    "gradient-string": "^2.0.2",
+    "inquirer": "^9.1.0",
+    "inquirer-autocomplete-prompt": "^3.0.1",
+    "ora": "^5.4.1",
+    "simple-git": "^3.22.0"
   },
   "files": [
     "bin",

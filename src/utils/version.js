@@ -1,4 +1,5 @@
-const ora = require('ora');
+// const ora = require('ora');
+import ora from 'ora';
 
 function parseVersion(tag) {
     const spinner = ora(`正在解析 tag: ${tag}`).start();
@@ -28,7 +29,12 @@ function incrementVersion(version, type) {
     }
 }
 
-module.exports = {
+// module.exports = {
+//     parseVersion,
+//     incrementVersion
+// }; 
+
+export {
     parseVersion,
     incrementVersion
-}; 
+}

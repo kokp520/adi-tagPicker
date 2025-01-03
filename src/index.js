@@ -1,15 +1,15 @@
-const chalk = require('chalk');
-const boxen = require('boxen');
+import chalk from 'chalk';
+import boxen from 'boxen';
 
-const { showTitle, showError, showVersionComparison } = require('./utils/display');
-const { isGitRepo, getAllTags, createTag } = require('./utils/git');
-const { parseVersion, incrementVersion } = require('./utils/version');
-const { 
+import { showTitle, showError, showVersionComparison } from './utils/display.js';
+import { isGitRepo, getAllTags, createTag } from './utils/git.js';
+import { parseVersion, incrementVersion } from './utils/version.js';
+import { 
     promptFirstTag, 
-    promptSelectTag, 
     promptUpdateType, 
-    promptConfirmation 
-} = require('./utils/prompts');
+    promptConfirmation,
+    fuzzySearchPrompt
+} from './utils/prompts.js';
 
 async function run() {
     try {
@@ -35,7 +35,7 @@ async function run() {
             return;
         }
 
-        const { selectedTag } = await promptSelectTag(tags);
+        const { selectedTag } = await fuzzySearchPrompt(tags);
         const version = parseVersion(selectedTag);
         if (!version) {
             return;
@@ -60,4 +60,4 @@ async function run() {
     }
 }
 
-module.exports = { run };
+export { run };

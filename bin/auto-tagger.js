@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { run } = require('../src/index.js');
+import { run } from '../src/index.js';
 
 // run().catch(console.error);
 

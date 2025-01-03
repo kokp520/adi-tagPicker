@@ -1,5 +1,7 @@
-const inquirer = require('inquirer');
-const chalk = require('chalk');
+import inquirer from 'inquirer';
+import inquirerPrompt from 'inquirer-autocomplete-prompt';
+
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
 
 async function promptFirstTag() {
     return inquirer.prompt([
@@ -12,16 +14,38 @@ async function promptFirstTag() {
     ]);
 }
 
-async function promptSelectTag(tags) {
+// async function promptSelectTag(tags) {
+//     return inquirer.prompt([
+//         {
+//             type: 'autocomplete',
+//             name: 'selectedTag',
+//             message: '請選擇一個 tag:',
+//             source: async (answersSoFar, input) => {
+//                 if (!input) {
+//                     return Promise.resolve(tags);
+//                 }
+//                 return Promise.resolve(tags.filter(tag => tag.includes(input)));
+//             }
+//         }
+//     ]);
+// }
+
+async function fuzzySearchPrompt(tags) {
     return inquirer.prompt([
         {
-            type: 'list',
+            type: 'autocomplete',
             name: 'selectedTag',
-            message: '請選擇一個 tag:',
-            choices: tags
+            message: '請輸入 tag 名稱以進行搜尋:',
+            source: async (answersSoFar, input) => {
+                if (!input) {
+                    return Promise.resolve(tags);
+                }
+                return Promise.resolve(tags.filter(tag => tag.includes(input)));
+            }
         }
     ]);
 }
+
 
 async function promptUpdateType() {
     return inquirer.prompt([
@@ -49,9 +73,10 @@ async function promptConfirmation() {
     ]);
 }
 
-module.exports = {
+export {
     promptFirstTag,
-    promptSelectTag,
+    // promptSelectTag,
     promptUpdateType,
-    promptConfirmation
-}; 
+    promptConfirmation,
+    fuzzySearchPrompt
+}

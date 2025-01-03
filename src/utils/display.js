@@ -1,7 +1,12 @@
-const figlet = require('figlet');
-const gradient = require('gradient-string');
-const chalk = require('chalk');
-const boxen = require('boxen');
+// const figlet = require('figlet');
+// const gradient = require('gradient-string');
+// const chalk = require('chalk');
+// const boxen = require('boxen');
+import figlet from 'figlet';
+import gradient from 'gradient-string';
+import chalk from 'chalk';
+import boxen from 'boxen';
+
 
 function showTitle() {
     return new Promise((resolve) => {
@@ -53,8 +58,14 @@ function showVersionComparison(currentTag, newTag) {
     ));
 }
 
-module.exports = {
+// module.exports = {
+//     showTitle,
+//     showError,
+//     showVersionComparison
+// }; 
+
+export {
     showTitle,
     showError,
     showVersionComparison
-}; 
+}

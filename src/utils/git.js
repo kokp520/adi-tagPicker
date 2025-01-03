@@ -1,5 +1,7 @@
-const simpleGit = require('simple-git');
-const ora = require('ora');
+// const simpleGit = require('simple-git');
+// const ora = require('ora');
+import simpleGit from 'simple-git';
+import ora from 'ora';
 
 async function isGitRepo() {
     const spinner = ora('檢查 Git 倉庫...').start();
@@ -45,8 +47,14 @@ async function createTag(tagName) {
     }
 }
 
-module.exports = {
+// module.exports = {
+//     isGitRepo,
+//     getAllTags,
+//     createTag
+// }; 
+
+export {
     isGitRepo,
     getAllTags,
     createTag
-}; 
+}
