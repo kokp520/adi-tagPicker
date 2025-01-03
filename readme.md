@@ -28,6 +28,8 @@
 
 - name: auto-tagger
 
+- [auto-tagger](https://www.npmjs.com/package/@kokp520/auto-tagger)
+
 ### Install
 
 run this command to install the package.
