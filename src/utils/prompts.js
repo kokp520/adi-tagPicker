@@ -8,39 +8,28 @@ async function promptFirstTag() {
         {
             type: 'confirm',
             name: 'createFirst',
-            message: '是否要創建第一個 tag (v1.0.0)?',
+            message: 'Are you ready to create first tag (v1.0.0)?',
             default: true
         }
     ]);
 }
-
-// async function promptSelectTag(tags) {
-//     return inquirer.prompt([
-//         {
-//             type: 'autocomplete',
-//             name: 'selectedTag',
-//             message: '請選擇一個 tag:',
-//             source: async (answersSoFar, input) => {
-//                 if (!input) {
-//                     return Promise.resolve(tags);
-//                 }
-//                 return Promise.resolve(tags.filter(tag => tag.includes(input)));
-//             }
-//         }
-//     ]);
-// }
 
 async function fuzzySearchPrompt(tags) {
     return inquirer.prompt([
         {
             type: 'autocomplete',
             name: 'selectedTag',
-            message: '請輸入 tag 名稱以進行搜尋:',
+            message: 'Please enter tag name to search:',
             source: async (answersSoFar, input) => {
                 if (!input) {
                     return Promise.resolve(tags);
                 }
-                return Promise.resolve(tags.filter(tag => tag.includes(input)));
+                
+                const searchTerms = input.split(/\s+/);
+                
+                return Promise.resolve(tags.filter(tag => 
+                    searchTerms.every(term => tag.includes(term))
+                ));
             }
         }
     ]);
@@ -54,9 +43,9 @@ async function promptUpdateType() {
             name: 'updateType',
             message: '請選擇要更新的版本級別：',
             choices: [
-                { name: '🐛 修復 (patch)', value: 'fix' },
-                { name: '✨ 功能 (minor)', value: 'mid' },
-                { name: '🚀 主要 (major)', value: 'main' }
+                { name: '🐛 patch (third)', value: 'fix' },
+                { name: '✨ minor (second)', value: 'mid' },
+                { name: '🚀 major (first)', value: 'main' }
             ]
         }
     ]);
@@ -67,7 +56,7 @@ async function promptConfirmation() {
         {
             type: 'confirm',
             name: 'confirm',
-            message: `確定要創建新的 tag 嗎？`,
+            message: `Are you ready to create new tag?`,
             default: true
         }
     ]);

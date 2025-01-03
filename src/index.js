@@ -52,7 +52,7 @@ async function run() {
         if (confirm) {
             await createTag(newTag);
         } else {
-            console.log(chalk.yellow('已取消創建'));
+            console.log(chalk.yellow('Canceled'));
         }
 
     } catch (error) {
