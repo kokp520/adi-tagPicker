@@ -88,6 +88,10 @@ fix => 1.2.4
 
 👤 **adi**
 
+## Donation
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/ncp/payment/RTFS76RU2S7RW)
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
